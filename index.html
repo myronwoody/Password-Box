@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/jquery.loadingModal.css">
+<!--===============================================================================================-->
+  <script>
+    delete module.exports
+  </script>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img style="padding-bottom: 10%;" src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form noEnterSubmit">
+					<span class="login100-form-title">
+						Member Login
+					</span>
+					<div id="welcome-back" style="padding-top:25%;align-content: center;text-align: center;display: none;">
+						<h3>Welcome back,</h3>
+						<h4><small>{{firstname}} {{lastname}}</small></h4>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="A valid E-mail is required">
+						<input class="input100" id="email" type="text" name="email" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" id="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" id="submit" type="button">
+							Login
+						</button>
+					</div>
+
+					<div class="text-center p-t-12">
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="#">
+							Username / Password?
+						</a>
+					</div>
+
+					<div class="text-center p-t-65">
+						<a class="txt2" href="register.html">
+							Create your Account
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+					<input type="submit" name="submit" id="submitClone" style="display: none;">
+				</form>
+			</div>
+		</div>
+	</div>
+<!--===============================================================================================-->  
+  <script src="cookies.js"></script>
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/bootstrap/js/popper.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/tilt/tilt.jquery.min.js"></script>
+  <script src="js/jquery.loadingModal.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+    function showModal() {
+        $('body').loadingModal({text: 'Signin in please wait..'});
+
+        var delay = function(ms){ return new Promise(function(r) { setTimeout(r, ms) }) };
+        var time = 3500;
+
+        delay(time)
+        	.then(function(){ window.location = 'overview.html'; })
+    }
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstname = localStorage.getItem("firstname");
+    $scope.lastname = localStorage.getItem("lastname");
+    $scope.country = localStorage.getItem("country");    
+});
+
+</script>
+  <script >
+
+  	$(document).ready(function(){
+  		
+  		if(localStorage.getItem("firstname")){
+  			// window.location = 'overview.html';
+  			$("#welcome-back").fadeIn();
+  			$(".wrap-input100").fadeOut();
+  			$(".login100-form-title").fadeOut();
+  			$(".text-center").fadeOut();
+  			$(".wrap-login100").css("padding", "80px 130px 33px 95px")
+  			// $("#password").fadeOut();
+  			console.log("Firstname set in localStorage");
+  		}else{
+  			// do nothing
+  		}
+
+  		$("#submit").click(function(event) {
+  			if(localStorage.getItem("firstname")){
+  				showModal()
+  			}else {
+		  		if($("#email").val() == "" || $("#password").val() == ""){
+		  			console.log("Error: email or password empty")
+	  				$(".input100").addClass('false-border');
+		  			$("#submitClone").click();
+		  		}else{
+		  			var postData = $("form").serialize();
+			  		$.ajax({
+			  			url: 'https://lmptastytrades.com/api/login.php',
+			  			type: 'POST',
+			  			data: postData,
+			  		}).done(function(response) {
+			  			if(response == 1){
+			  				localStorage.setItem("email", $("#email").val());
+
+			  				$.ajax({
+			  					url: 'https://lmptastytrades.com/api/get-login-data.php',
+			  					type: 'POST',
+			  					data: postData,
+			  				}).done(function(personData) {
+			  					console.log("Succes getting personal information from api");
+			  					console.log(personData)
+			  					var userInfo = JSON.parse(personData);
+			  					console.log(userInfo[0].country)
+			  					var firstname = userInfo[0].name;
+			  					var lastname = userInfo[0].lastname;
+			  					var country = userInfo[0].country;
+			  					localStorage.setItem("firstname", firstname);
+			  					localStorage.setItem("lastname", lastname);
+			  					localStorage.setItem("country", country);
+			  					showModal();
+			  				})
+			  				.fail(function() {
+			  					console.log("error");
+			  				})
+			  				
+			  				$("#email").addClass('success-border');
+			  				$("#password").addClass('success-border');
+			  			}else if(response == 2){
+			  				$("#email").addClass('success-border');
+			  				$("#password").addClass('false-border');
+			  			}else if(response == 3){
+			  				$("#email").addClass('false-border');
+			  				$("##password").addClass('false-border');
+			  			}else if(response == 4){
+			  				$("#email").addClass('false-border');
+			  				$("#password").addClass('false-border');
+			  			}
+			  			console.log(response);
+			  		}).fail(function() {
+			  			console.log("error");
+			  			console.log(response)
+			  		}).always(function() {
+			  			console.log("Ran the function");
+			  			console.log(postData)
+			  		});
+		  		}
+		  	}
+  		});
+
+  		// remove the red line if there is one
+  		$("#email").focus(function(event) {
+  			$("#email").removeClass('success-border');
+  			$("#email").removeClass('false-border');
+  		});
+
+  		// remove the red line if there is one
+  		$("#password").focus(function(event) {
+  			$("#password").removeClass('false-border');
+  		});
+
+  		// prevent the users from using enter to not load the action from the form
+		$('.noEnterSubmit').keypress(function(e){
+		    if ( e.which == 13 ) return false;
+		    //or...
+		    if ( e.which == 13 ) e.preventDefault();
+		});
+  		
+  	}); // end document.ready()
+  	
+
+    $('.js-tilt').tilt({
+      scale: 1.1
+    })
+  </script>
+<!--===============================================================================================-->
+  <script src="js/main.js"></script>
+</div>
+</body>
+</html> 

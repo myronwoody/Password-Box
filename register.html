@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Register</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/jquery.loadingModal.css">
+<!--===============================================================================================-->
+  <script>
+    delete module.exports
+  </script>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100-register">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img id="register-image-padding" src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form noEnterSubmit">
+					<span class="login100-form-title-register">
+						Member register
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate="A valid E-mail is required">
+						<input class="input100" id="email" type="email" name="email" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="What's your name?">
+						<input class="input100" id="firstname" type="text" name="firstname" placeholder="Firstname">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="What's your lastname?">
+						<input class="input100" id="lastname" type="text" name="lastname" placeholder="Lastname">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-address-card" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" minlength="6" id="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" id="password2" minlength="6" name="password2" placeholder="Password again">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" id="submit" type="button">
+							Register
+						</button>
+					</div>
+
+<!-- 					<div class="text-center p-t-12">
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="imessage:hello">
+							Username / Password?
+						</a>
+					</div> -->
+
+					<div class="text-center p-t-10">
+						<a class="txt2" href="index.html">
+							Already got and account, go to login
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+					<input type="submit" name="submit" id="submitClone" style="display: none;">
+				</form>
+			</div>
+		</div>
+	</div>
+<!--===============================================================================================-->  
+  <script src="cookies.js"></script>
+  <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/bootstrap/js/popper.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+  <script src="vendor/tilt/tilt.jquery.min.js"></script>
+  <script src="js/jquery.loadingModal.js"></script>
+<script>
+    function showModal() {
+        $('body').loadingModal({text: 'Creating your account, please wait..'});
+
+        // var delay = function(ms){ return new Promise(function(r) { setTimeout(r, ms) }) };
+        // var time = 3500;
+
+        // delay(time)
+        // 	.then(function(){ window.location = 'index.html'; })
+    }
+
+</script>
+  <script >
+
+  	$(document).ready(function(){
+  		
+  		// if(localStorage.getItem("firstname")){
+  		// 	// window.location = 'overview.html';
+  		// 	$("#welcome-back").fadeIn();
+  		// 	$(".wrap-input100").fadeOut();
+  		// 	$(".login100-form-title").fadeOut();
+  		// 	$(".text-center").fadeOut();
+  		// 	// $("#password").fadeOut();
+  		// 	console.log("Firstname set in localStorage");
+  		// }else{
+  		// 	// do nothing
+  		// }
+
+  		$("#submit").click(function(event) {
+  			$("#email").removeClass('false-border');
+  			$("#password").removeClass('false-border');
+  			$("#password2").removeClass('false-border');
+  			var password = $("#password").val();
+ 			var password2 = $("#password2").val();
+ 			var email = $("#email").val();
+ 			var firstname = $("#firstname").val();
+ 			var lastname = $("#lastname").val();
+ 			var postData = $("form").serialize();
+
+  			if ($("#email").val() == "") {
+  			    $("#email").addClass('false-border');
+  			    // $("#submitClone").click();
+  			} else {
+  			    if ($("#email").val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+  			    	$("#email").addClass('false-border');
+  			        console.log("invalid email")
+  			    }else{
+  			    	// DIT KOT ALS EMAIL GOED IS
+		  			if($("#password").val() == "" || $("#password2").val() == ""){
+		  				$("#password").addClass('false-border');
+		  				$("#password2").addClass('false-border');
+		  			}
+
+		  			if($("#firstname").val() == ""){
+		  				$("#firstname").addClass('false-border')
+		  				console.log("firstname is empty: " + $("#firstname").val())
+		  			}else{
+		  				$("#firstname").addClass('success-border')
+		  			}
+
+		  			if($("#lastname").val() == ""){
+		  				$("#lastname").addClass('false-border')
+		  				console.log("lastname is empty: " + $("#lastname").val())
+		  			}else{
+		  				$("#lastname").addClass('success-border')
+		  			}
+		  			
+		  			if($("#password").val() == $("#password2").val() && $("#email").val() != ""){
+		  				if(password.length >= 6){
+		  					if(firstname && lastname != ""){
+			  					console.log("password is 6 or greater than 6")
+			  			    	console.log("valid email");
+			  			    	showModal();
+			  			    	$("#email").addClass('success-border');
+				  				$.ajax({
+				  					url: 'https://lmptastytrades.com/api/register.php',
+				  					type: 'POST',
+				  					data: postData,
+				  				}).done(function(personData) {
+				  					console.log(personData);
+				  					if(personData == "true"){
+				  						window.location = 'index.html';
+				  					}
+				  				})
+				  				.fail(function() {
+				  					console.log("error");
+				  				})
+		  					}
+		  				}else{
+		  					console.log("password length = " + password.length)
+			  				$("#password").addClass('false-border');
+			  				$("#password2").addClass('false-border');
+		  				}
+		  			}else{
+		  				console.log("Password don't match");
+		  				$("#password").addClass('false-border');
+		  				$("#password2").addClass('false-border');
+		  			}
+
+		  			$("#email").addClass('success-border')
+  			    }
+  			} //end else of email
+  		});
+
+  		// remove the red line if there is one
+  		$("#email").focus(function(event) {
+  			$("#email").removeClass('success-border');
+  			$("#email").removeClass('false-border');
+  		});
+
+  		// remove the red line if there is one
+  		$("#password").focus(function(event) {
+  			$("#password").removeClass('false-border');
+  		});
+
+  		// remove the red line if there is one
+  		$("#password2").focus(function(event) {
+  			$("#password2").removeClass('false-border');
+  		});
+
+  		$("#firstname").focus(function(event) {
+  			$("#firstname").removeClass('false-border');
+  		});
+
+  		$("#lastname").focus(function(event) {
+  			$("#lastname").removeClass('false-border');
+  		});
+
+  		// prevent the users from using enter to not load the action from the form
+		$('.noEnterSubmit').keypress(function(e){
+		    if ( e.which == 13 ) return false;
+		    //or...
+		    if ( e.which == 13 ) e.preventDefault();
+		});
+  		
+  	}); // end document.ready()
+  	
+
+    $('.js-tilt').tilt({
+      scale: 1.1
+    })
+  </script>
+<!--===============================================================================================-->
+  <script src="js/main.js"></script>
+</div>
+</body>
+</html> 

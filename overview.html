@@ -1,0 +1,287 @@
+<html lang="en">
+  <head>
+    <title>Pass-Box</title>
+    <link rel="stylesheet" media="all" href="./style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <link rel="shortcut icon" type="image/x-icon" href="https://a.1password.com/app/images/favicon.ico">
+    <link rel="mask-icon" href="https://a.1password.com/app/images/pinned-tab.svg" color="black">
+    <script>
+      delete module.exports
+    </script>
+  </head>
+  <body class="account-view">
+    <div style="display: none;" class="window-overlay"></div>
+    <div ng-app="myApp" ng-controller="myCtrl">
+    <div id="b5app">
+      <div>
+        <!-- Popup for new vault -->
+        <div style="display: none;" id="popup-container">
+          <div class="">
+            <div>
+              <div id="modal" role="dialog" aria-label="Create new vault">
+                <header>
+                  <h3>New Vault</h3>
+                  <a id="closeNewVault">Close</a>
+                </header>
+                <div class="scroll-box">
+                  <main class="content-box">
+                    <div id="create-vault-form" class="form">
+                      <div class="fieldset">
+                        <div class="dropzone large" tabindex="0" role="button" aria-label="Vault icon">
+                          <input type="file" accept="image/*">
+                          <div aria-hidden="true" class="avatar vault large">
+                            <img alt="" src="https://a.1password.com/app/images/avatar-vault-default.png">
+                            <div class="edit">Edit</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fieldset"><input type="text" id="vault-title" placeholder="Vault Title" maxlength="25" required=""><br><textarea id="vault-description" placeholder="Description (optional)" maxlength="255"></textarea><br><span></span><button class="new-button blue big" disabled="" id="create-vault">Create Vault</button></div>
+                    </div>
+                  </main>
+                </div>
+              </div>
+              <div class="window-overlay"></div>
+            </div>
+          </div>
+        </div>
+        <!-- End popup new vault -->
+        <!-- Popup account uprade -->
+        <div class="upgrade-account-popup" style="display: none;" id="modal" role="dialog">
+          <div class="scroll-box">
+            <main class="content-box">
+              <div class="upgrade-account">
+                <div>
+                  <h1 class="top">Share Pass-Box with your Family or Team!</h1>
+                  <button class="button short corner" id="cancelShareBox">Cancel</button>
+                  <div class="images"><img src="https://a.1password.com/app/images/family-illustration.svg" class="picture"><img src="https://a.1password.com/app/images/team-illustration.svg" class="picture"></div>
+                  <div>
+                    <p>Give your loved ones or team members the tools to stay safe online.</p>
+                  </div>
+                  <div>
+                    <button class="button primary family">Upgrade to a Family<img src="https://a.1password.com/app/images/breadcrumb.svg" class="breadcrumb"></button>
+                    <p>$4.99 per month for a family of 5 people (billed annually)</p>
+                  </div>
+                  <br>
+                  <div>
+                    <button class="button primary business">Upgrade to a Team<img src="https://a.1password.com/app/images/breadcrumb.svg" class="breadcrumb"></button>
+                    <p>$3.99 per team member per month (billed annually)</p>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+        <!-- End popup account upgrade -->
+        <div id="unlocked-app" aria-hidden="false">
+          <header id="top-bar">
+            <div id="title-container" class="contains-special-content-left contains-notifications">
+              <a id="main-icon" role="button" aria-label="Home" href="overview.html"><img src="https://a.1password.com/app/images/main-icon.svg" width="46px" height="46px" alt=""></a>
+              <h1 id="page-title">Password Box</h1>
+              <div id="top-bar-left-content">
+                <button id="buttonNewVault" class="new-button add-button">
+                  <svg width="12px" height="12px" class="svg-add">
+                    <path d="M5 5H.5c-.3 0-.5.2-.5.5v1c0 .3.2.5.5.5H5v4.5c0 .3.2.5.5.5h1c.3 0 .5-.2.5-.5V7h4.5c.3 0 .5-.2.5-.5v-1c0-.3-.2-.5-.5-.5H7V.5c0-.3-.2-.5-.5-.5h-1c-.3 0-.5.2-.5.5V5z"></path>
+                  </svg>
+                  New Vault
+                </button>
+              </div>
+            </div>
+            <div id="user-menu">
+              <div class="menu-container">
+                <button class="userLabel" aria-haspopup="true" aria-expanded="true" aria-label="death coderz User Menu">
+                  <div>
+                    <div aria-hidden="true" class="avatar default small bg-color-5">{{firstname.charAt(0)}}{{lastname.charAt(0)}}</div>
+                    <label class="account-name">{{firstname}} {{lastname}}</label><img class="menu-icon" src="https://a.1password.com/app/images/dropdown-chevron-v2.svg" alt="" width="12px" height="7px">
+                  </div>
+                </button>
+                <div class="active" style="display: none;" role="menu" aria-expanded="true" aria-hidden="false" aria-label="death coderz User Menu">
+                  <div><a href="overview.html">My Profile</a><a href="#">Get the Apps</a><a href="#">Import</a><a target="_blank" href="#" rel="noreferrer">Help &amp; Support</a><a id="menu-sign-out"><img src="https://a.1password.com/app/images/padlock.svg" width="13px" height="16px" alt="">Sign Out</a></div>
+                </div>
+              </div>
+            </div>
+          </header>
+          <nav id="global-sidebar">
+            <div id="sidebar-greeting">👋 Good afternoon!</div>
+            <a href="overview.html" class="selected">Home</a>
+            <div><a href="#">Billing</a><a>Invite People...</a></div>
+            <div class="bottom-align">
+              <div id="sidebar-banner" class="box lavender invite-family" role="link">
+                <h4>Invite the Family</h4>
+                <p>Share passwords and keep your entire family secure.</p>
+                <button aria-label="Dismiss Banner">
+                  <svg width="7px" height="7px" class="svg-banner-close" fill-rule="evenodd">
+                    <path d="M3.5 2.3L1.3.3C1-.3.8-.3.6 0L.2.7c-.2.2-.2.5 0 .7l2 2.2-2 2.2c-.3.2-.3.5 0 .7l.4.4c.2.2.5.2.7 0l2.2-2 2.2 2c.2.2.5.2.7 0l.4-.4c.2-.2.2-.6 0-.8l-2-2 2-2.3C7 1 7 .8 6.8.6L6.4.2C6.2 0 6 0 5.7.2l-2.2 2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <div id="sidebar-quest" class="box red ekit" role="link">
+                <h2>Save your Emergency Kit</h2>
+                <p>It contains your Secret Key, which you need to sign-in on new devices.</p>
+              </div>
+            </div>
+          </nav>
+          <section id="main-content">
+            <div id="home-card-container">
+              <div id="welcome-card" class="card double-width sand" role="group" aria-label="Welcome">
+                <div id="welcome-blurb" class="card-half">
+                  <div class="text">
+                    <h1 class="title">Welcome to Pass-Box</h1>
+                    <p>Follow these steps to get started and install Pass-Box on your phone, desktop and browser.</p>
+                  </div>
+                  <div class="image">
+                    <img src="https://a.1password.com/app/images/welcome-wagon.svg" class="picture" alt="">
+                    <div class="ground"></div>
+                  </div>
+                </div>
+                <div class="steps card-half">
+                  <div class="step">
+                    <h3 class="title">Step One - Install</h3>
+                    <p>Install Pass-Box everywhere you need your passwords.</p>
+                    <a class="link" href="#">
+                      Install the Apps
+                      <svg width="8px" height="14px" class="svg-right-chevron" fill-rule="evenodd">
+                        <path d="M1.02 12.5l.77.6c.2.18.5.15.64-.04l5.18-5.7c.17-.2.17-.48 0-.67L2.47.9C2.3.72 2 .72 1.8.9l-.8.6c-.2.18-.24.5-.06.7 0 .02 0 .03.02.04L5.08 6.7c.18.18.18.48 0 .67l-4.12 4.4c-.2.2-.17.5.03.7v.02z"></path>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="step">
+                    <h3 class="title">Step Two - Secure</h3>
+                    <p>Start saving your passwords in your Personal vault.</p>
+                    <a class="link" href="#">
+                      Open my vault
+                      <svg width="8px" height="14px" class="svg-right-chevron" fill-rule="evenodd">
+                        <path d="M1.02 12.5l.77.6c.2.18.5.15.64-.04l5.18-5.7c.17-.2.17-.48 0-.67L2.47.9C2.3.72 2 .72 1.8.9l-.8.6c-.2.18-.24.5-.06.7 0 .02 0 .03.02.04L5.08 6.7c.18.18.18.48 0 .67l-4.12 4.4c-.2.2-.17.5.03.7v.02z"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <button id="dismiss-welcome-card" class="dismiss sand" aria-label="dismiss">
+                  <svg width="7px" height="7px" class="svg-banner-close" fill-rule="evenodd">
+                    <path d="M3.5 2.3L1.3.3C1-.3.8-.3.6 0L.2.7c-.2.2-.2.5 0 .7l2 2.2-2 2.2c-.3.2-.3.5 0 .7l.4.4c.2.2.5.2.7 0l2.2-2 2.2 2c.2.2.5.2.7 0l.4-.4c.2-.2.2-.6 0-.8l-2-2 2-2.3C7 1 7 .8 6.8.6L6.4.2C6.2 0 6 0 5.7.2l-2.2 2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="card" role="group" aria-label="Personal">
+                <div class="main clickable">
+                  <div class="header">
+                    <div aria-hidden="true" class="avatar vault medium"><img alt="" src="https://a.1password.com/app/images/avatar-vault-default.png"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <h2>Personal</h2>
+                  <p><strong id="loadItems">0</strong> items</p>
+                  <p class="description">Your default vault for storing items.</p>
+                  <div class="accessor-list" role="list" aria-label="Vault accessors"></div>
+                </div>
+                <div class="buttons">
+                  <button class="open">
+                    Open Vault
+                    <svg width="8px" height="14px" class="svg-right-chevron" fill-rule="evenodd">
+                      <path d="M1.02 12.5l.77.6c.2.18.5.15.64-.04l5.18-5.7c.17-.2.17-.48 0-.67L2.47.9C2.3.72 2 .72 1.8.9l-.8.6c-.2.18-.24.5-.06.7 0 .02 0 .03.02.04L5.08 6.7c.18.18.18.48 0 .67l-4.12 4.4c-.2.2-.17.5.03.7v.02z"></path>
+                    </svg>
+                  </button>
+                  <button class="manage">
+                    Manage
+                    <svg width="12px" height="12px" viewBox="0 0 12 12" class="svg-settings">
+                      <path d="M12 6.5L12 5.5C12 5.2 11.8 5 11.5 5L11.3 5C11 5 10.7 4.8 10.6 4.5 10.5 4.3 10.4 4.1 10.3 3.9 10.2 3.6 10.2 3.2 10.5 2.9L10.6 2.8C10.8 2.6 10.8 2.3 10.6 2.1L9.9 1.4C9.7 1.2 9.4 1.2 9.2 1.4L9 1.5C8.8 1.8 8.4 1.8 8.1 1.7 7.9 1.6 7.7 1.5 7.5 1.5 7.2 1.3 7 1 7 0.7L7 0.5C7 0.2 6.8 0 6.5 0L5.5 0C5.2 0 5 0.2 5 0.5L5 0.7C5 1.1 4.8 1.4 4.5 1.5 4.3 1.5 4.1 1.6 3.9 1.7 3.6 1.9 3.2 1.8 3 1.6L2.8 1.4C2.6 1.2 2.3 1.2 2.1 1.4L1.4 2.1C1.2 2.3 1.2 2.6 1.4 2.8L1.6 3C1.8 3.2 1.9 3.6 1.7 3.9 1.6 4.1 1.6 4.3 1.5 4.5 1.4 4.8 1.1 5 0.7 5L0.5 5C0.2 5 0 5.2 0 5.5L0 6.5C0 6.8 0.2 7 0.5 7L0.7 7C1.1 7 1.4 7.2 1.5 7.5 1.6 7.7 1.6 7.9 1.7 8.1 1.9 8.4 1.8 8.8 1.6 9L1.4 9.2C1.2 9.4 1.2 9.7 1.4 9.9L2.1 10.6C2.3 10.8 2.6 10.8 2.8 10.6L3 10.4C3.2 10.2 3.6 10.1 3.9 10.3 4.1 10.4 4.3 10.5 4.5 10.5 4.8 10.6 5 10.9 5 11.3L5 11.5C5 11.8 5.2 12 5.5 12L6.5 12C6.8 12 7 11.8 7 11.5L7 11.3C7 11 7.2 10.7 7.5 10.5 7.7 10.5 7.9 10.4 8.1 10.3 8.4 10.2 8.8 10.2 9 10.5L9.2 10.6C9.4 10.8 9.7 10.8 9.9 10.6L10.6 9.9C10.8 9.7 10.8 9.4 10.6 9.2L10.5 9.1C10.2 8.8 10.2 8.4 10.3 8.1 10.4 7.9 10.5 7.7 10.6 7.5 10.7 7.2 11 7 11.3 7L11.5 7C11.8 7 12 6.8 12 6.5L12 6.5ZM3.7 5.5C3.9 4.6 4.6 3.9 5.5 3.7 7.2 3.3 8.7 4.8 8.3 6.5 8.1 7.4 7.4 8.1 6.5 8.3 4.8 8.7 3.3 7.2 3.7 5.5Z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="filler"></div>
+              <div class="filler"></div>
+              <div class="filler"></div>
+              <div class="filler"></div>
+              <div class="filler"></div>
+              <div class="filler"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  <!--===============================================================================================-->  
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript">
+     
+      $(".clickable").click(function(){
+        window.location = 'overview-passwords.html';
+      })
+
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstname = localStorage.getItem("firstname");
+    $scope.lastname = localStorage.getItem("lastname");
+    $scope.country = localStorage.getItem("country");    
+});
+      // var firstname = localStorage.getItem("firstname");
+      // var lastname = localStorage.getItem("lastname");
+      // document.getElementById("country").innerHTML = localStorage.getItem("country");
+      const {clipboard} = require('electron')
+      // copy shit to clipboard
+      function test(){
+        clipboard.writeText('Example String', 'selection')
+        console.log(clipboard.readText('selection'))
+      }
+
+      $("#loadItems").load("https://lmptastytrades.com/api/load-password-items-overview.php?email="+localStorage.getItem("email"));
+
+      $(document).ready(function() {
+        $("#buttonNewVault").click(function(){
+          $("#popup-container").show()
+        })
+
+        $("#closeNewVault").click(function(){
+          $("#popup-container").hide()
+        })
+
+        $("#closeBanner").click(function(event) {
+          $("#sidebar-banner").hide('fast');
+        });
+      
+      });
+
+        $("#dismiss-welcome-card").click(function(){
+          $("#welcome-card").fadeOut()
+        })
+
+        $(".window-overlay").click(function(){
+          $("#popup-container").hide();
+        })
+
+        $("#sidebar-banner").click(function(){
+          console.log("clicked");
+          $(".window-overlay").show()
+          $(".upgrade-account-popup").show();
+        })
+
+        $("#cancelShareBox").click(function(){
+          $(".window-overlay").hide()
+          $(".upgrade-account-popup").hide();
+        })
+
+        $(".userLabel").click(function(){
+          $(".active").fadeIn();
+        })
+        
+        $("#global-sidebar").click(function(){
+          $(".active").fadeOut();
+        })
+
+        $("#main-content").click(function(){
+          $(".active").fadeOut();
+        })
+
+    </script>
+  </div>
+  </body>
+</html>
