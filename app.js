@@ -2,6 +2,13 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
+require('update-electron-app')({
+  repo: 'myronwoody/Password-Box',
+  updateInterval: '5 minutes',
+  logger: require('electron-log')
+})
+
+
 let window = null
 
 // Wait until the app is ready

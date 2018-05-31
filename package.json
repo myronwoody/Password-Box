@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "angular": "^1.7.0",
+    "electron-log": "^2.2.14",
     "electron-packager": "^12.1.0"
   }
 }
